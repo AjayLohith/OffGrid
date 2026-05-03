@@ -1,0 +1,28 @@
+### Environment Variables ###
+.env
+.env.local
+.env.*.local
+!.env.example
+
+### Dependencies ###
+node_modules/
+package-lock.json
+yarn.lock
+
+### Build ###
+dist/
+build/
+
+### Development ###
+.vite/
+.DS_Store
+*.log
+*.swp
+*.swo
+*~
+
+### IDEs ###
+.vscode/
+.idea/
+*.iml
+*.iws
