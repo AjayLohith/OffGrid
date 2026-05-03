@@ -2,8 +2,9 @@ services:
   - type: web
     name: offgrid-api
     env: docker
+    rootDir: backend/OffGrid/OffGrid
     dockerfilePath: ./Dockerfile
-    healthCheckPath: /actuator/health
+    healthCheckPath: /api/status
     envVars:
       - key: MONGO_URI
         sync: false
