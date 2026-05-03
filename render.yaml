@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: offgrid-api
+    env: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://*.vercel.app,https://your-vercel-app.vercel.app,http://localhost:5173
+      - key: P2P_ENABLED
+        value: false
+      - key: MDNS_ENABLED
+        value: false
+      - key: NICK
+        value: render-node
+      - key: ROOM
+        value: general

@@ -1,0 +1,59 @@
+version: "3.9"
+
+networks:
+  meshpulse-net:
+    driver: bridge
+
+services:
+  node-a:
+    build: .
+    environment:
+      PORT: 8080
+      TCP_PORT: 9090
+      NICK: Alpha
+      ROOM: emergency
+      DISCOVERY_TAG: meshpulse-demo
+    ports:
+      - "8080:8080"
+      - "9090:9090"
+    volumes:
+      - node-a-data:/app/data
+    networks:
+      - meshpulse-net
+
+  node-b:
+    build: .
+    environment:
+      PORT: 8081
+      TCP_PORT: 9091
+      NICK: Bravo
+      ROOM: emergency
+      DISCOVERY_TAG: meshpulse-demo
+    ports:
+      - "8081:8081"
+      - "9091:9091"
+    volumes:
+      - node-b-data:/app/data
+    networks:
+      - meshpulse-net
+
+  node-c:
+    build: .
+    environment:
+      PORT: 8082
+      TCP_PORT: 9092
+      NICK: Charlie
+      ROOM: emergency
+      DISCOVERY_TAG: meshpulse-demo
+    ports:
+      - "8082:8082"
+      - "9092:9092"
+    volumes:
+      - node-c-data:/app/data
+    networks:
+      - meshpulse-net
+
+volumes:
+  node-a-data:
+  node-b-data:
+  node-c-data:
