@@ -1,0 +1,32 @@
+# Environment Variables
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Backend
+backend/OffGrid/OffGrid/target/
+backend/OffGrid/OffGrid/.classpath
+backend/OffGrid/OffGrid/.project
+backend/OffGrid/OffGrid/.settings/
+backend/OffGrid/OffGrid/*.log
+backend/**/*.class
+backend/**/*.jar
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.DS_Store
+frontend/*.log
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
