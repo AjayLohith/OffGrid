@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.offgrid</groupId>
+    <artifactId>OffGrid</artifactId>
+    <version>1.0.0</version>
+    <name>OffGrid</name>
+    <description>Offline-first peer-to-peer emergency communication system</description>
+
+    <properties>
+        <java.version>21</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jvm-libp2p.version>1.2.2-RELEASE</jvm-libp2p.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>libp2p-jvm-libp2p</id>
+            <url>https://dl.cloudsmith.io/public/libp2p/jvm-libp2p/maven/</url>
+        </repository>
+        <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>consensys-public</id>
+            <url>https://artifacts.consensys.net/public/maven/maven/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- Spring Boot starters -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- ✅ ADDED: SockJS server-side support (required for .withSockJS() in WebSocketConfig) -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>sockjs-client</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+        <!-- ✅ ADDED: STOMP over WebSocket client assets -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>stomp-websocket</artifactId>
+            <version>2.3.4</version>
+        </dependency>
+
+        <!-- jmDNS — ✅ FIXED groupId: must be org.jmdns NOT javax.jmdns -->
+        <!-- Code uses javax.jmdns.* imports — this is correct, the package is javax.jmdns
+             but the Maven groupId is org.jmdns -->
+        <dependency>
+            <groupId>io.libp2p</groupId>
+            <artifactId>jvm-libp2p</artifactId>
+            <version>${jvm-libp2p.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jmdns</groupId>
+            <artifactId>jmdns</artifactId>
+            <version>3.5.9</version>
+        </dependency>
+
+        <!-- ❌ REMOVED: netty-all — you use raw Java sockets, Netty is imported but
+             never actually used in your code. Keeping it adds 8MB for zero benefit. -->
+
+        <!-- MongoDB driver already included via spring-boot-starter-data-mongodb -->
+
+        <!-- Jackson (already on classpath via spring-boot-starter-web, explicit is fine) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <!-- ✅ ADDED: Jackson JSR310 module — required to serialize LocalDateTime in PeerEntity/MessageEntity -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+        <!-- ✅ ADDED: Spring Boot configuration processor — needed for
+             @ConfigurationProperties(prefix="meshpulse") to work with IDE + binding -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>offgrid-1.0.0</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <encoding>UTF-8</encoding>
+                    <showWarnings>true</showWarnings>
+                    <failOnWarning>false</failOnWarning>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,36 @@
+meshpulse:
+  node:
+    port: ${PORT:8080}
+    tcp-port: ${TCP_PORT:9090}
+    nick: ${NICK:anonymous}
+    room: ${ROOM:general}
+  mdns:
+    enabled: ${MDNS_ENABLED:true}
+    service-type: "_meshpulse._tcp.local."
+    discovery-tag: ${DISCOVERY_TAG:meshpulse-default}
+  p2p:
+    enabled: ${P2P_ENABLED:true}
+    seed-peers: ${SEED_PEERS:}
+    reconnect-delay-ms: 5000
+    max-dedup-cache: 2000
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
+
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+      database: offGrid
+      auto-index-creation: true
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+server:
+  port: ${PORT:8080}
+
+logging:
+  level:
+    com.offgrid: INFO
+    org.springframework.data.mongodb: WARN
